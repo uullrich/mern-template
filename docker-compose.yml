@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    environment:
+      NODE_ENV: dev
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend/src:/usr/src/app/src
+
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - db_data:/data/db
+    networks:
+      - node-network
+    environment:
+      - MONGODB_DATABASE="demo"
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./db-data
+      o: bind
+
+networks:
+  node-network:
+    driver: bridge
