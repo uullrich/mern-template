@@ -9,6 +9,7 @@ services:
       NODE_ENV: dev
     ports:
       - 3000:3000
+      - 9999:9999
     depends_on:
       - mongodb
     volumes:
@@ -17,7 +18,7 @@ services:
   mongodb:
     image: mongo:7.0
     ports:
-      - "27017:27017"
+      - 27017:27017
     volumes:
       - db_data:/data/db
     networks:
@@ -30,7 +31,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./db-data
+      device: $PWD/db-data
       o: bind
 
 networks:
