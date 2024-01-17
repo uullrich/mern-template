@@ -1,8 +1,8 @@
 import Joi from "joi";
-import type { GalleryCreateRequest } from "../model/Gallery";
+import { Gallery } from "../model/Gallery";
 
 export const createGalleryBodySchema = {
-  body: Joi.object<GalleryCreateRequest>().keys({
+  body: Joi.object<Gallery>().keys({
     name: Joi.string().required(),
   }),
 };

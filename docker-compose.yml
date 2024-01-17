@@ -8,10 +8,12 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3000
-      MONGO_DB_CONNECTION: mongodb://node-network:27017/demo
+      MONGO_DB_CONNECTION: mongodb://mongodb:27017/demo
     ports:
       - 3000:3000
       - 9999:9999
+    networks:
+      - node-network
     depends_on:
       - mongodb
     volumes:

@@ -5,6 +5,7 @@ import { ConfigValidator } from "./config/ConfigValidator";
 import { AppConfig } from "./model/AppConfig";
 import appConfig from "./config/AppConfig";
 import { appConfigSchema } from "./validation/AppConfig.validation";
+import { DatabaseConnector } from "./database/DatabaseConnector";
 
 class App {
   private express: Express;
@@ -19,7 +20,9 @@ class App {
     this.validateAppConfig();
   }
 
-  public start(): void {
+  public async start(): Promise<void> {
+    await DatabaseConnector.connect();
+
     this.server = this.express.listen(this.appConfig.port, () => {
       console.log(`Example app listening on port ${this.appConfig.port}`);
     });
@@ -44,4 +47,8 @@ class App {
 }
 
 const app = new App();
-app.start();
+app
+  .start()
+  .then(() => {})
+  // eslint-disable-next-line unicorn/prefer-top-level-await
+  .catch(() => {});
