@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run:onchange": "node --require ts-node/register --inspect=9999 src/index.ts",
+    "run:onchange": "node --require ts-node/register --inspect=0.0.0.0:9999 src/index.ts",
     "watch:ts": "nodemon --watch 'src/**/*' -e ts --exec 'npm run run:onchange'",
     "dev": "dotenv npm run watch:ts",
     "build:typescript": "tsc",
