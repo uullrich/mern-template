@@ -2,10 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import { Gallery } from "../model/Gallery";
 import { HttpStatus } from "../util/HttpStatus";
 import GalleryService from "../service/Gallery.service";
+import Logger from "../util/Logger";
 
 export const getGalleries = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    console.log("Get all galleries");
+    Logger.info({ message: "Get all galleries" });
     const galleries = await GalleryService.getGalleries();
     response.json(galleries);
   } catch (error) {
@@ -15,7 +16,7 @@ export const getGalleries = async (request: Request, response: Response, next: N
 
 export const getGalleryById = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    console.log("Get gallery with id:", request.params.id);
+    Logger.info({ message: "Get gallery with id", id: request.params.id });
     const gallery = await GalleryService.getGalleryById(request.params.id);
     if (!gallery) {
       response.sendStatus(404);
@@ -30,7 +31,7 @@ export const getGalleryById = async (request: Request, response: Response, next:
 
 export const createGallery = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    console.log("Create gallery with body:", request.body);
+    Logger.info({ message: "Create gallery with body", body: request.body as Gallery });
     const id = await GalleryService.createGallery(request.body as Gallery);
     response.status(HttpStatus.CREATED).json({ id });
   } catch (error) {
@@ -40,7 +41,7 @@ export const createGallery = async (request: Request, response: Response, next: 
 
 export const deleteGallery = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    console.log("Delete gallery with id:", request.params.id);
+    Logger.info({ message: "Delete gallery with id", id: request.params.id });
     await GalleryService.deleteGallery(request.params.id);
     response.sendStatus(HttpStatus.NO_CONTENT);
   } catch (error) {
