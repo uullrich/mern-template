@@ -6,6 +6,7 @@ import { AppConfig } from "./model/AppConfig";
 import appConfig from "./config/AppConfig";
 import { appConfigSchema } from "./validation/AppConfig.validation";
 import { DatabaseConnector } from "./database/DatabaseConnector";
+import errorHandler from "./middleware/errorHandler";
 
 class App {
   private express: Express;
@@ -15,9 +16,9 @@ class App {
   constructor() {
     this.express = express();
 
-    this.express.use(express.json());
+    this.registerMiddleware();
     this.registerRoutes();
-    this.validateAppConfig();
+    this.loadAppConfig();
   }
 
   public async start(): Promise<void> {
@@ -28,12 +29,17 @@ class App {
     });
   }
 
+  private registerMiddleware(): void {
+    this.express.use(express.json());
+  }
+
   private registerRoutes(): void {
     this.express.use("/api/gallery", galleryRouter);
     this.express.use("*", notFoundRouter);
+    this.express.use(errorHandler);
   }
 
-  private validateAppConfig(): void {
+  private loadAppConfig(): void {
     const { validatedConfig, error } = ConfigValidator.validate<AppConfig>(appConfig, appConfigSchema);
     if (error || !validatedConfig) {
       console.log(`Invalid AppConfig stop the service:\n${error?.details.map((detail) => detail.message).join("\n")}`);

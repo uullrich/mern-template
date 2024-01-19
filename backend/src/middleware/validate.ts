@@ -1,7 +1,8 @@
-import type { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import { HttpStatus } from "../util/HttpStatus";
 import { RequestValidationSchema } from "../validation/RequestValidationSchema";
+import { ErrorCode } from "../error/ErrorCode";
+import { ValidationError } from "../error/ValidationError";
 
 /**
  * This functions handles the validation of the given request validation schema
@@ -28,12 +29,11 @@ const validate = (schema: RequestValidationSchema) => (request: Request, respons
     return;
   }
 
-  const errors = error?.details.map((errorDetail) => ({
+  const validationErrorDetails = error?.details.map((errorDetail) => ({
     field: errorDetail.path.join(", "),
     message: errorDetail.message,
   }));
-
-  response.status(HttpStatus.BAD_REQUEST).json({ errors });
+  throw ValidationError.build(ErrorCode.VALIDATION_ERROR, "Validation error", validationErrorDetails);
 };
 
 export default validate;
