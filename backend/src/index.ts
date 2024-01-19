@@ -7,6 +7,7 @@ import appConfig from "./config/AppConfig";
 import { appConfigSchema } from "./validation/AppConfig.validation";
 import { DatabaseConnector } from "./database/DatabaseConnector";
 import errorHandler from "./middleware/errorHandler";
+import Logger from "./util/Logger";
 
 class App {
   private express: Express;
@@ -25,7 +26,7 @@ class App {
     await DatabaseConnector.connect();
 
     this.server = this.express.listen(this.appConfig.port, () => {
-      console.log(`Example app listening on port ${this.appConfig.port}`);
+      Logger.info(`Example app listening on port ${this.appConfig.port}`);
     });
   }
 
@@ -48,7 +49,7 @@ class App {
     }
 
     this.appConfig = validatedConfig;
-    console.log("AppConfig is valid!");
+    Logger.info("AppConfig is valid!");
   }
 }
 

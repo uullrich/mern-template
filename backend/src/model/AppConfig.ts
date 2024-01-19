@@ -1,8 +1,11 @@
 export enum LogLevel {
-  INFO = "info",
-  DEBUG = "debug",
-  WARNING = "warning",
   ERROR = "error",
+  WARN = "warn",
+  INFO = "info",
+  HTTP = "http",
+  VERBOSE = "verbose",
+  DEBUG = "debug",
+  SILLY = "silly",
 }
 
 export interface AppConfig {
