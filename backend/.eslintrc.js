@@ -16,6 +16,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
   },
   rules: {
+    "@typescript-eslint/no-misused-promises": 0,
     "@typescript-eslint/no-unsafe-assignment": 1,
     "@typescript-eslint/no-unsafe-call": 1,
     "@typescript-eslint/no-unsafe-member-access": 1,
