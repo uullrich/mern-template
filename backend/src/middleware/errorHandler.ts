@@ -12,7 +12,7 @@ const handleServiceError = (response: Response, error: ServiceError): void => {
 };
 
 const handleApiError = (response: Response, error: ApiError): void => {
-  response.status(error.httpsStatus).json({
+  response.status(error.httpStatus).json({
     errorCode: error.errorCode,
     message: error.message,
   });
