@@ -5,21 +5,15 @@ import { ConnectionError } from "../error/ConnectionError";
 import { ConnectionType } from "./ConnectionType";
 import { ErrorCode } from "../error/ErrorCode";
 
-export class DatabaseConnector {
+class DatabaseConnector {
   private static NUMBER_OF_CONNECTION_RETRIES = 3;
 
-  public static async connect(): Promise<void> {
-    mongoose.set("strictQuery", true);
+  constructor() {
+    this.initConnectionHandlers();
+  }
 
-    mongoose.connection.on("connected", () => Logger.info("MongoDB is connected"));
-    mongoose.connection.on("open", () => Logger.info("MongoDB connection is open"));
-    mongoose.connection.on("disconnected", () => Logger.info("MongoDB connection is disconnected"));
-    mongoose.connection.on("reconnected", () => Logger.info("MongoDB connection has reconnected"));
-    mongoose.connection.on("disconnecting", () => Logger.info("MongoDB disconnecting"));
-    mongoose.connection.on("close", () => Logger.info("MongoDB connection closed"));
-    mongoose.connection.on("error", (error) => {
-      Logger.error(error);
-    });
+  public async connect(): Promise<void> {
+    mongoose.set("strictQuery", true);
 
     for (let index = 1; index <= DatabaseConnector.NUMBER_OF_CONNECTION_RETRIES; index++) {
       try {
@@ -39,4 +33,18 @@ export class DatabaseConnector {
       }
     }
   }
+
+  private initConnectionHandlers(): void {
+    mongoose.connection.on("connected", () => Logger.info("MongoDB is connected"));
+    mongoose.connection.on("open", () => Logger.info("MongoDB connection is open"));
+    mongoose.connection.on("disconnected", () => Logger.info("MongoDB connection is disconnected"));
+    mongoose.connection.on("reconnected", () => Logger.info("MongoDB connection has reconnected"));
+    mongoose.connection.on("disconnecting", () => Logger.info("MongoDB disconnecting"));
+    mongoose.connection.on("close", () => Logger.info("MongoDB connection closed"));
+    mongoose.connection.on("error", (error) => {
+      Logger.error(error);
+    });
+  }
 }
+
+export default new DatabaseConnector();

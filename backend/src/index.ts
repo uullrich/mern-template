@@ -5,7 +5,7 @@ import { ConfigValidator } from "./config/ConfigValidator";
 import { AppConfig } from "./model/AppConfig";
 import appConfig from "./config/AppConfig";
 import { appConfigSchema } from "./validation/AppConfig.validation";
-import { DatabaseConnector } from "./connectors/DatabaseConnector";
+import DatabaseConnector from "./connectors/DatabaseConnector";
 import errorHandler from "./middleware/errorHandler";
 import Logger from "./util/Logger";
 import { ConnectionError } from "./error/ConnectionError";
