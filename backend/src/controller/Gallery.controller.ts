@@ -3,6 +3,7 @@ import { Gallery } from "../model/Gallery";
 import { HttpStatus } from "../util/HttpStatus";
 import GalleryService from "../service/Gallery.service";
 import Logger from "../util/Logger";
+import { TypedRequest } from "../types/TypedRequest";
 
 export const getGalleries = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
@@ -29,10 +30,14 @@ export const getGalleryById = async (request: Request, response: Response, next:
   }
 };
 
-export const createGallery = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
+export const createGallery = async (
+  request: TypedRequest<Gallery>,
+  response: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
-    Logger.info({ message: "Create gallery with body", body: request.body as Gallery });
-    const id = await GalleryService.createGallery(request.body as Gallery);
+    Logger.info({ message: "Create gallery with body", body: request.body });
+    const id = await GalleryService.createGallery(request.body);
     response.status(HttpStatus.CREATED).json({ id });
   } catch (error) {
     next(error);
