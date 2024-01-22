@@ -9,15 +9,14 @@ class DatabaseConnector {
   private static NUMBER_OF_CONNECTION_RETRIES = 3;
 
   constructor() {
+    mongoose.set("strictQuery", true);
     this.initConnectionHandlers();
   }
 
   public async connect(): Promise<void> {
-    mongoose.set("strictQuery", true);
-
     for (let index = 1; index <= DatabaseConnector.NUMBER_OF_CONNECTION_RETRIES; index++) {
       try {
-        await mongoose.connect(appConfig.mongoDbConnection, { serverSelectionTimeoutMS: 2000 });
+        await mongoose.connect(appConfig.mongoDbConnection);
       } catch (error) {
         Logger.error({ message: `Connection to MongoDB failed for retry number ${index}`, error });
 
