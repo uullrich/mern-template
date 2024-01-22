@@ -9,6 +9,7 @@ import DatabaseConnector from "./connectors/DatabaseConnector";
 import errorHandler from "./middleware/errorHandler";
 import Logger from "./util/Logger";
 import { ConnectionError } from "./error/ConnectionError";
+import requestLogging from "./middleware/requestLogging";
 
 class App {
   private express: Express;
@@ -18,9 +19,9 @@ class App {
   constructor() {
     this.express = express();
 
+    this.loadAppConfig();
     this.registerMiddleware();
     this.registerRoutes();
-    this.loadAppConfig();
   }
 
   public async start(): Promise<void> {
@@ -44,6 +45,7 @@ class App {
 
   private registerMiddleware(): void {
     this.express.use(express.json());
+    this.express.use(requestLogging(this.appConfig));
   }
 
   private registerRoutes(): void {
