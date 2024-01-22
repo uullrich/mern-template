@@ -5,9 +5,10 @@ import { ConfigValidator } from "./config/ConfigValidator";
 import { AppConfig } from "./model/AppConfig";
 import appConfig from "./config/AppConfig";
 import { appConfigSchema } from "./validation/AppConfig.validation";
-import { DatabaseConnector } from "./database/DatabaseConnector";
+import { DatabaseConnector } from "./connectors/DatabaseConnector";
 import errorHandler from "./middleware/errorHandler";
 import Logger from "./util/Logger";
+import { ConnectionError } from "./error/ConnectionError";
 
 class App {
   private express: Express;
@@ -23,11 +24,22 @@ class App {
   }
 
   public async start(): Promise<void> {
-    await DatabaseConnector.connect();
+    await this.connectToDatabase();
 
     this.server = this.express.listen(this.appConfig.port, () => {
       Logger.info(`Example app listening on port ${this.appConfig.port}`);
     });
+  }
+
+  private async connectToDatabase(): Promise<void> {
+    try {
+      await DatabaseConnector.connect();
+    } catch (error) {
+      const databaseConnectionError = error as ConnectionError;
+      Logger.error({ message: "Exit process due to database connection failure", error: databaseConnectionError });
+      // eslint-disable-next-line unicorn/no-process-exit
+      process.exit(1);
+    }
   }
 
   private registerMiddleware(): void {
@@ -45,7 +57,7 @@ class App {
     if (error || !validatedConfig) {
       console.log(`Invalid AppConfig stop the service:\n${error?.details.map((detail) => detail.message).join("\n")}`);
       // eslint-disable-next-line unicorn/no-process-exit
-      process.exit();
+      process.exit(1);
     }
 
     this.appConfig = validatedConfig;

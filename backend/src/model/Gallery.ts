@@ -6,4 +6,6 @@ const gallerySchema = new Schema({
 
 export type Gallery = InferSchemaType<typeof gallerySchema>;
 
-export const GalleryModel = mongoose.model("Gallery", gallerySchema);
+export const galleryModel = mongoose.model("Gallery", gallerySchema);
+
+export type GalleryModel = typeof galleryModel;
