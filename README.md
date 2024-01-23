@@ -1,8 +1,8 @@
 <!-- Introduction -->
 
-# Opinionated development environment for the MERN stack
+# Opinionated template for the MERN stack
 
-This is my opinionated MERN development setup. The project uses docker compose for bootstraping the Node.js backend service, React development server and MongoDB.
+This is my opinionated MERN template with development setup. The project uses docker compose for bootstraping the Node.js backend service, React development server and MongoDB.
 
 For the backend the project contains my prefered express app structure with demo endpoints, logging and database connection handling. File changes are detected with nodemon and if so, the node.js service is restarted in the development container.
 
