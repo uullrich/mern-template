@@ -9,6 +9,7 @@ export const createGalleryBodySchema = {
 
 export const galleryIdParameterSchema = {
   params: Joi.object().keys({
-    id: Joi.string().required(),
+    userId: Joi.string().required(),
+    galleryId: Joi.string().required(),
   }),
 };

@@ -7,8 +7,9 @@ import { TypedRequest } from "../types/TypedRequest";
 
 export const getGalleries = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    Logger.info({ message: "Get all galleries" });
-    const galleries = await GalleryService.getGalleries();
+    Logger.info({ message: "Get all galleries for user" });
+    const { userId } = request.params;
+    const galleries = await GalleryService.getGalleries(userId);
     response.json(galleries);
   } catch (error) {
     next(error);
@@ -17,8 +18,10 @@ export const getGalleries = async (request: Request, response: Response, next: N
 
 export const getGalleryById = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    Logger.info({ message: "Get gallery with id", id: request.params.id });
-    const gallery = await GalleryService.getGalleryById(request.params.id);
+    const { userId, galleryId } = request.params;
+    Logger.info({ message: "Get gallery for user", userId, galleryId });
+
+    const gallery = await GalleryService.getGalleryById(userId, galleryId);
     if (!gallery) {
       response.sendStatus(404);
       return;
@@ -36,8 +39,10 @@ export const createGallery = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    Logger.info({ message: "Create gallery with body", body: request.body });
-    const id = await GalleryService.createGallery(request.body);
+    const { userId } = request.params as { userId: string };
+    Logger.info({ message: "Create gallery for user with body", userId, body: request.body });
+
+    const id = await GalleryService.createGallery(userId, request.body);
     response.status(HttpStatus.CREATED).json({ id });
   } catch (error) {
     next(error);
@@ -46,8 +51,10 @@ export const createGallery = async (
 
 export const deleteGallery = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {
-    Logger.info({ message: "Delete gallery with id", id: request.params.id });
-    await GalleryService.deleteGallery(request.params.id);
+    const { userId, galleryId } = request.params;
+    Logger.info({ message: "Delete gallery for user", userId, galleryId });
+
+    await GalleryService.deleteGallery(userId, galleryId);
     response.sendStatus(HttpStatus.NO_CONTENT);
   } catch (error) {
     next(error);

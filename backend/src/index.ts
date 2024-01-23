@@ -1,6 +1,6 @@
 import express, { type Express } from "express";
 import { Server } from "node:http";
-import { galleryRouter, notFoundRouter } from "./routes/Routes";
+import { galleryRouter, notFoundRouter, userRouter } from "./routes/Routes";
 import { ConfigValidator } from "./config/ConfigValidator";
 import { AppConfig } from "./model/AppConfig";
 import appConfig from "./config/AppConfig";
@@ -51,7 +51,8 @@ class App {
   }
 
   private registerRoutes(): void {
-    this.express.use("/api/gallery", galleryRouter);
+    this.express.use("/api/user", userRouter);
+    this.express.use("/api/user", galleryRouter);
     this.express.use("*", notFoundRouter);
     this.express.use(errorHandler);
   }

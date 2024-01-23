@@ -5,9 +5,13 @@ import { createGalleryBodySchema, galleryIdParameterSchema } from "../validation
 
 const galleryRouter = Router();
 
-galleryRouter.get("/", GalleryController.getGalleries);
-galleryRouter.get("/:id", validate(galleryIdParameterSchema), GalleryController.getGalleryById);
-galleryRouter.post("/", validate(createGalleryBodySchema), GalleryController.createGallery);
-galleryRouter.delete("/:id", validate(galleryIdParameterSchema), GalleryController.deleteGallery);
+galleryRouter.get("/:userId/gallery", GalleryController.getGalleries);
+galleryRouter.get("/:userId/gallery/:galleryId", validate(galleryIdParameterSchema), GalleryController.getGalleryById);
+galleryRouter.post("/:userId/gallery", validate(createGalleryBodySchema), GalleryController.createGallery);
+galleryRouter.delete(
+  "/:userId/gallery/:galleryId",
+  validate(galleryIdParameterSchema),
+  GalleryController.deleteGallery,
+);
 
 export default galleryRouter;

@@ -1,37 +1,51 @@
 import { ErrorCode } from "../error/ErrorCode";
 import { ServiceError } from "../error/ServiceError";
-import { Gallery, GalleryModel, galleryModel } from "../model/Gallery";
+import { Gallery } from "../model/Gallery";
+import { UserModel, userModel } from "../model/User";
 
 class GalleryService {
-  constructor(private gallery: GalleryModel) {}
+  constructor(private user: UserModel) {}
 
-  public async getGalleries(): Promise<Gallery[]> {
+  public async getGalleries(userId: string): Promise<Gallery[] | undefined> {
     try {
-      return await this.gallery.find();
+      const user = await this.user.findById(userId);
+      return user?.galleries || undefined;
     } catch (error) {
       throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not read galleries from database", undefined, [error]);
     }
   }
 
-  public async getGalleryById(id: string): Promise<Gallery | undefined> {
+  public async getGalleryById(userId: string, galleryId: string): Promise<Gallery | undefined> {
     try {
-      const gallery = await this.gallery.findById(id);
+      const user = await this.user.findById(userId);
+      const gallery = user?.galleries?.id(galleryId);
       if (!gallery) {
         return;
       }
 
       return gallery;
     } catch (error) {
-      throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not read single gallery from database", { id }, [
-        error,
-      ]);
+      throw ServiceError.build(
+        ErrorCode.DATABASE_ERROR,
+        "Could not read single gallery from database",
+        { userId, galleryId },
+        [error],
+      );
     }
   }
 
-  public async createGallery(gallery: Gallery): Promise<string> {
+  public async createGallery(userId: string, gallery: Gallery): Promise<string | undefined> {
     try {
-      const result = await this.gallery.create(gallery);
-      return result.id as string;
+      const user = await this.user.findById(userId);
+      if (!user?.galleries) {
+        return;
+      }
+
+      user.galleries.push(gallery);
+      const saveResult = await user.save();
+
+      const newlyCreatedGalleryId = saveResult.galleries?.[user.galleries.length - 1].id as string;
+      return newlyCreatedGalleryId;
     } catch (error) {
       throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not create gallery in database", { ...gallery }, [
         error,
@@ -39,16 +53,26 @@ class GalleryService {
     }
   }
 
-  public async deleteGallery(id: string): Promise<void> {
+  public async deleteGallery(userId: string, galleryId: string): Promise<void> {
     try {
-      await this.gallery.findByIdAndDelete(id);
+      const user = await this.user.findById(userId);
+      if (!user?.galleries) {
+        return;
+      }
+
+      user.galleries.id(galleryId)?.deleteOne();
+
+      await user.save();
     } catch (error) {
-      throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not delete single gallery from database", { id }, [
-        error,
-      ]);
+      throw ServiceError.build(
+        ErrorCode.DATABASE_ERROR,
+        "Could not delete single gallery from database",
+        { userId, galleryId },
+        [error],
+      );
     }
   }
 }
 
-const galleryService = new GalleryService(galleryModel);
+const galleryService = new GalleryService(userModel);
 export default galleryService;

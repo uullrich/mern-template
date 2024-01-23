@@ -1,6 +1,6 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
-const gallerySchema = new Schema({
+export const gallerySchema = new Schema({
   name: { type: String, required: true },
 });
 
