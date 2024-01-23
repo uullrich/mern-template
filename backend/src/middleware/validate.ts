@@ -6,8 +6,9 @@ import { ValidationError } from "../error/ValidationError";
 
 /**
  * This functions handles the validation of the given request validation schema.
- * Throws an error on validation error which is handled in the errorHandler middleware.
- * @param {RequestValidationSchema} schema - The schema object can contain optional body, query, and params keys, each with a Joi schema object
+ * Throws an ValidationError on validation error which is handled in the errorHandler middleware.
+ *
+ * @param {RequestValidationSchema} schema The schema object can contain optional body, query, and params keys, each with a Joi schema object
  */
 const validate = (schema: RequestValidationSchema) => (request: Request, response: Response, next: NextFunction) => {
   const { body, query, params } = request;

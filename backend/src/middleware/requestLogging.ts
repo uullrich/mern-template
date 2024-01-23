@@ -2,6 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { AppConfig, LogLevel } from "../model/AppConfig";
 import Logger from "../util/Logger";
 
+/**
+ * Logs a start entry with details based on the log level.
+ *
+ * @param request Express request object
+ * @param logLevel Current log level
+ */
 const startRequestLog = (request: Request, logLevel: LogLevel): void => {
   const { method, originalUrl, body } = request;
 
@@ -18,6 +24,14 @@ const startRequestLog = (request: Request, logLevel: LogLevel): void => {
   Logger.info({ message: "start request", method, url: originalUrl });
 };
 
+/**
+ * Logs an end entry with details based on the log level.
+ *
+ * @param request Express request object
+ * @param response Express response object
+ * @param logLevel Current log level
+ * @param durationInMs Code execution duration
+ */
 const endRequestLog = (request: Request, response: Response, logLevel: LogLevel, durationInMs: number): void => {
   const { method, originalUrl } = request;
 
@@ -35,6 +49,12 @@ const endRequestLog = (request: Request, response: Response, logLevel: LogLevel,
   Logger.info({ message: "end request", method, url: originalUrl, durationInMs });
 };
 
+/**
+ * Logs a start and end entry for every request and
+ * determines the duration of the executed code.
+ *
+ * @param appConfig App configuration
+ */
 const requestLogging =
   (appConfig: AppConfig) =>
   (request: Request, response: Response, next: NextFunction): void => {
