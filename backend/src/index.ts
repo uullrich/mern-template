@@ -9,7 +9,8 @@ import DatabaseConnector from "./connectors/DatabaseConnector";
 import errorHandler from "./middleware/errorHandler";
 import Logger from "./util/Logger";
 import { ConnectionError } from "./error/ConnectionError";
-import requestLogging from "./middleware/requestLogging";
+import requestLoggingMiddleware from "./middleware/requestLogging";
+import asyncLocalStorageMiddleware from "./middleware/asyncLocalStorage";
 
 class App {
   private express: Express;
@@ -45,7 +46,8 @@ class App {
 
   private registerMiddleware(): void {
     this.express.use(express.json());
-    this.express.use(requestLogging(this.appConfig));
+    this.express.use(asyncLocalStorageMiddleware);
+    this.express.use(requestLoggingMiddleware(this.appConfig));
   }
 
   private registerRoutes(): void {

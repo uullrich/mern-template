@@ -1,5 +1,6 @@
 import appConfig from "../config/AppConfig";
 import { createLogger, format, transports } from "winston";
+import asyncLocalStorage from "../util/AsyncLocalStorage";
 
 const logger = createLogger({
   level: appConfig.logLevel,
@@ -9,17 +10,18 @@ const logger = createLogger({
     }),
     format.errors({ stack: true }),
     format((info) => {
-      const { requestId, timestamp, level, message, ...rest } = info as typeof info & {
+      const { timestamp, level, message, ...rest } = info as typeof info & {
         timestamp: string;
         message: string;
-        requestId: string;
       };
+
+      const requestStore = asyncLocalStorage.getStore();
 
       //Change the order of the attributes
       return {
         level,
         timestamp,
-        requestId,
+        requestId: requestStore?.requestId,
         message,
         ...rest,
       };
