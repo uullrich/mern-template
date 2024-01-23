@@ -1,4 +1,4 @@
-import { ConnectionType } from "../connectors/ConnectionType";
+import { ConnectionType } from "../connector/ConnectionType";
 import { ErrorCode } from "./ErrorCode";
 
 export class ConnectionError extends Error {
