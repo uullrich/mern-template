@@ -4,7 +4,9 @@
   "description": "Demo backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:unit": "echo \"Error: no unit tests specified\"",
+    "test:integration": "cucumber-js",
+    "test": "npm run test:integration && npm run test:unit",
     "run:onchange": "node --require ts-node/register --inspect=0.0.0.0:9999 src/index.ts",
     "watch:ts": "nodemon --watch 'src/**/*' -e ts --exec 'npm run run:onchange'",
     "dev": "dotenv npm run watch:ts",
@@ -23,6 +25,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^10.3.1",
     "@types/node": "^20.11.0",
     "@types/express": "^4.17.21",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
