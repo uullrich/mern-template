@@ -33,13 +33,17 @@ class DatabaseConnector {
     }
   }
 
+  public async disconnect(): Promise<void> {
+    await mongoose.disconnect();
+  }
+
   private initConnectionHandlers(): void {
     mongoose.connection.on("connected", () => Logger.info("MongoDB is connected"));
     mongoose.connection.on("open", () => Logger.info("MongoDB connection is open"));
-    mongoose.connection.on("disconnected", () => Logger.info("MongoDB connection is disconnected"));
-    mongoose.connection.on("reconnected", () => Logger.info("MongoDB connection has reconnected"));
-    mongoose.connection.on("disconnecting", () => Logger.info("MongoDB disconnecting"));
-    mongoose.connection.on("close", () => Logger.info("MongoDB connection closed"));
+    mongoose.connection.on("disconnected", () => Logger.warn("MongoDB connection is disconnected"));
+    mongoose.connection.on("reconnected", () => Logger.warn("MongoDB connection has reconnected"));
+    mongoose.connection.on("disconnecting", () => Logger.warn("MongoDB is disconnecting"));
+    mongoose.connection.on("close", () => Logger.warn("MongoDB connection is closed"));
     mongoose.connection.on("error", (error) => {
       Logger.error(error);
     });
