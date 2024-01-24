@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "resolveJsonModule": true,
-    "types": ["jest", "node", "axios"],
+    "types": ["@types/jest", "@types/node", "axios"],
     "typeRoots": ["../node_modules"],
     "baseUrl": "./",
     "paths": {
