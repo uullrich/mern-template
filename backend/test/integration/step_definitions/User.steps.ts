@@ -1,19 +1,26 @@
 import { Given, Then, When } from "@cucumber/cucumber";
 import DemoWorld from "../DemoWorld";
+import HttpRequester from "../util/HttpRequester";
+import { RequestConfigBuilder } from "../util/builder/RequestConfigBuilder";
 
-Given("a request body with the valid email address test@test.com", function (this: DemoWorld) {
-  this.test = "123";
-  console.log("Hello world");
+Given("the request body with the valid email address {word}", function (this: DemoWorld, email: string) {
+  this.userBuilder.withEmail(email);
 });
 
-Given("the request body contains a valid profile", function (this: DemoWorld) {
-  console.log("Hello world 2", this.test);
+Given("the request body contains a valid first name: {word}", function (this: DemoWorld, firstName: string) {
+  this.userBuilder.withFirstName(firstName);
 });
 
-When("the request is sent to the user creation endpoint", function (this: DemoWorld) {
-  console.log("Hello world 3");
+Given("the request body contains a valid last name: {word}", function (this: DemoWorld, lastName: string) {
+  this.userBuilder.withLastName(lastName);
+});
+
+When("the request is sent to the user creation endpoint", async function (this: DemoWorld) {
+  const user = this.userBuilder.build();
+  const request = new RequestConfigBuilder().withMethod("POST").withUrl("/api/user").withRequestBody(user).build();
+  this.response = await HttpRequester.sendRequest(request);
 });
 
 Then("a new user is created in the database", function (this: DemoWorld) {
-  console.log("Hello world 4");
+  //console.log(this.response);
 });

@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "types": ["jest", "node", "axios"],
+    "typeRoots": ["../node_modules"],
+    "baseUrl": "./",
+    "paths": {
+      "*": ["../node_modules/*"]
+    }
+  },
+  "exclude": ["../node_modules"],
+  "include": ["./**/*.ts", "../src/**/*.ts"]
+}
