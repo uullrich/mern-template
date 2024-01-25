@@ -1,12 +1,14 @@
 import { Given, Then, When } from "@cucumber/cucumber";
 import { expect } from "expect";
 import { ObjectId } from "mongodb";
+import { AxiosError } from "axios";
 import DemoWorld from "../DemoWorld";
 import UserRequester from "../util/requester/UserRequester";
 import MongoTestHelper from "../util/database/MongoTestHelper";
 import { User } from "../../../src/model/User";
+import { Response } from "../util/requester/HttpRequester";
 
-Given("the request body with the valid email address {word}", function (this: DemoWorld, email: string) {
+Given("the request body contains a(n) valid/invalid email address: {word}", function (this: DemoWorld, email: string) {
   this.userBuilder.withEmail(email);
 });
 
@@ -20,7 +22,13 @@ Given("the request body contains a valid last name: {word}", function (this: Dem
 
 When("the request is sent to the user creation endpoint", async function (this: DemoWorld) {
   this.user = this.userBuilder.build();
-  this.response = await UserRequester.createUser(this.user);
+
+  try {
+    this.response = await UserRequester.createUser(this.user);
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    this.response = axiosError.response as Response<unknown>;
+  }
 });
 
 Then("the userId of the newly created user is returned", function (this: DemoWorld) {
@@ -50,4 +58,12 @@ Then("a new user is created in the database", async function (this: DemoWorld) {
     firstName,
     lastName,
   });
+});
+
+Then("the response contains an email address validation error", function (this: DemoWorld) {
+  //ToDo: implememt
+});
+
+Then("no user is created in the database", async function (this: DemoWorld) {
+  //ToDo: implement
 });

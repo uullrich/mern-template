@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { DeepPartial } from "utility-types";
 
-export type Response<T> = DeepPartial<AxiosResponse<T>>;
+export type Response<T> = AxiosResponse<T>;
 
 export class HttpRequester {
   constructor(private axios: AxiosInstance) {}
