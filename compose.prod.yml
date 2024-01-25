@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      target: prod
+    environment:
+      PORT: 3000
+      LOG_LEVEL: info
+      NODE_ENV: production
+      MONGO_DB_CONNECTION: mongodb://mongodb:27017/demo-prod
+    ports:
+      - 3000:3000
+      - 9999:9999
+
+  mongodb:
+    volumes:
+      - db_data_prod:/data/db
+    environment:
+      - MONGODB_DATABASE="demo-prod"
+
+volumes:
+  db_data_prod:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/db-data/prod
+      o: bind

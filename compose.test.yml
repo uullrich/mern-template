@@ -1,36 +1,31 @@
-version: "3.8"
-
 services:
   backend:
     build:
       context: ./backend
       target: test
     environment:
-      NODE_ENV: production
       PORT: 3000
-      MONGO_DB_CONNECTION: mongodb://mongodb:27017/demo
       LOG_LEVEL: debug
+      NODE_ENV: production
+      MONGO_DB_CONNECTION: mongodb://mongodb:27017/demo-integrationtest
     ports:
       - 3000:3000
       - 9999:9999
-    networks:
-      - node-network
-    depends_on:
-      - mongodb
     volumes:
       - ./backend/src:/usr/src/app/src
       - ./backend/test:/usr/src/app/test
       - ./backend/cucumber.js:/usr/src/app/cucumber.js
 
   mongodb:
-    image: mongo:7.0
-    ports:
-      - 27017:27017
-    networks:
-      - node-network
+    volumes:
+      - db_data_test:/data/db
     environment:
-      - MONGODB_DATABASE="demo"
+      - MONGODB_DATABASE="demo-integrationtest"
 
-networks:
-  node-network:
-    driver: bridge
+volumes:
+  db_data_test:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/db-data/test
+      o: bind

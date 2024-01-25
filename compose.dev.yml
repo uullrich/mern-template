@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      target: dev
+    environment:
+      PORT: 3000
+      LOG_LEVEL: debug
+      NODE_ENV: development
+      MONGO_DB_CONNECTION: mongodb://mongodb:27017/demo-dev
+    ports:
+      - 3000:3000
+      - 9999:9999
+    volumes:
+      - ./backend/src:/usr/src/app/src
+
+  mongodb:
+    volumes:
+      - db_data_dev:/data/db
+    environment:
+      - MONGODB_DATABASE="demo-dev"
+
+volumes:
+  db_data_dev:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/db-data/dev
+      o: bind

@@ -1,0 +1,18 @@
+services:
+  backend:
+    networks:
+      - back-tier
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - 27017:27017
+    networks:
+      - back-tier
+
+networks:
+  back-tier:
+    driver: bridge
+  front-tier: {}
