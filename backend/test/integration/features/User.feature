@@ -6,3 +6,4 @@ Feature: User endpoint operations
     And the request body contains a valid last name: Mustermann
     When the request is sent to the user creation endpoint
     Then a new user is created in the database
+    And the userId of the newly created user is returned
