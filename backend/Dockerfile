@@ -15,16 +15,6 @@ USER node
 COPY . .
 CMD npm run dev
 
-FROM base as prod
-ENV NODE_ENV production
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev
-USER node
-COPY . .
-CMD node src/index.js
-
 FROM base as test
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
@@ -33,3 +23,19 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 USER node
 COPY . .
 CMD npm run test
+
+FROM base as build
+ENV NODE_ENV production
+COPY . .
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --omit=dev \
+    npm run build
+
+FROM base as prod
+ENV NODE_ENV production
+COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/node_modules ./node_modules
+USER node
+CMD node dist/index.js
