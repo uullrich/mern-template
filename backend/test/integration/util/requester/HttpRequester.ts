@@ -1,10 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { DeepPartial } from "utility-types";
 
-class HttpRequester {
+export type Response<T> = DeepPartial<AxiosResponse<T>>;
+
+export class HttpRequester {
   constructor(private axios: AxiosInstance) {}
 
-  public sendRequest<T>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
-    return this.axios.request<T>(config);
+  public sendRequest<T>(config: AxiosRequestConfig): Promise<Response<T>> {
+    return this.axios.request<T>(config) as Promise<Response<T>>;
   }
 }
 
