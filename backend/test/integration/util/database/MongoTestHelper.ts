@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, Collection } from "mongodb";
 
 export class MongoTestHelper {
   constructor(private mongoClient: MongoClient) {}
@@ -22,6 +22,10 @@ export class MongoTestHelper {
       const deleteResult = await collection.deleteMany({});
       console.log(`Deleted ${deleteResult.deletedCount} document(s) from collection ${collection.collectionName}`);
     }
+  }
+
+  public getCollectionByName(collectionName: string): Collection {
+    return mongoClient.db().collection(collectionName);
   }
 }
 
