@@ -7,6 +7,7 @@ import UserRequester from "../util/requester/UserRequester";
 import MongoTestHelper from "../util/database/MongoTestHelper";
 import { User } from "../../../src/model/User";
 import { Response } from "../util/requester/HttpRequester";
+import { ErrorCode } from "../../../src/error/ErrorCode";
 
 Given("the request body contains a(n) valid/invalid email address: {word}", function (this: DemoWorld, email: string) {
   this.userBuilder.withEmail(email);
@@ -61,9 +62,23 @@ Then("a new user is created in the database", async function (this: DemoWorld) {
 });
 
 Then("the response contains an email address validation error", function (this: DemoWorld) {
-  //ToDo: implememt
+  const validationErrorResponse = this.response.data;
+
+  expect(validationErrorResponse).toBeDefined();
+  expect(validationErrorResponse).toEqual({
+    errorCode: ErrorCode.VALIDATION_ERROR,
+    message: "Validation error",
+    details: [
+      {
+        field: "body, email",
+        message: '"body.email" must be a valid email',
+      },
+    ],
+  });
 });
 
 Then("no user is created in the database", async function (this: DemoWorld) {
-  //ToDo: implement
+  const userCollection = MongoTestHelper.getCollectionByName("users");
+  const users = await userCollection.find<User>({}).toArray();
+  expect(users.length).toBe(0);
 });
