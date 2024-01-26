@@ -9,6 +9,16 @@ export class UserRequester {
     const request = new RequestConfigBuilder().withMethod("POST").withUrl("/api/user").withRequestBody(user).build();
     return this.httpRequester.sendRequest<{ id: string }>(request);
   }
+
+  public getUsers(): Promise<Response<User[]>> {
+    const request = new RequestConfigBuilder().withMethod("GET").withUrl("/api/user").build();
+    return this.httpRequester.sendRequest<User[]>(request);
+  }
+
+  public getUser(id: string): Promise<Response<User>> {
+    const request = new RequestConfigBuilder().withMethod("GET").withUrl(`/api/user/${id}`).build();
+    return this.httpRequester.sendRequest<User>(request);
+  }
 }
 
 export default new UserRequester(Requester);

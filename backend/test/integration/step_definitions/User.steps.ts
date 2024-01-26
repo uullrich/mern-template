@@ -8,6 +8,7 @@ import MongoTestHelper from "../util/database/MongoTestHelper";
 import { User } from "../../../src/model/User";
 import { Response } from "../util/requester/HttpRequester";
 import { ErrorCode } from "../../../src/error/ErrorCode";
+import { userCollectionWithoutGalleries } from "../fixtures/UserCollection";
 
 Given("the request body contains a(n) valid/invalid email address: {word}", function (this: DemoWorld, email: string) {
   this.userBuilder.withEmail(email);
@@ -21,6 +22,17 @@ Given("the request body contains a valid last name: {word}", function (this: Dem
   this.userBuilder.withLastName(lastName);
 });
 
+Given("the database contains multiple users", async function (this: DemoWorld) {
+  const userCollection = MongoTestHelper.getCollectionByName("users");
+  const result = await userCollection.insertMany(userCollectionWithoutGalleries);
+
+  //Remember this user for later processing
+  this.user = {
+    ...userCollectionWithoutGalleries[1],
+    _id: new ObjectId(result.insertedIds[1].id).toString(),
+  };
+});
+
 When("the request is sent to the user creation endpoint", async function (this: DemoWorld) {
   this.user = this.userBuilder.build();
 
@@ -30,6 +42,18 @@ When("the request is sent to the user creation endpoint", async function (this: 
     const axiosError = error as AxiosError;
     this.response = axiosError.response as Response<unknown>;
   }
+});
+
+When("the get all user endpoint is called", async function (this: DemoWorld) {
+  this.response = await UserRequester.getUsers();
+});
+
+When("the get user endpoint is called", async function (this: DemoWorld) {
+  if (!this.user._id) {
+    fail("Missing user id");
+  }
+
+  this.response = await UserRequester.getUser(this.user._id);
 });
 
 Then("the userId of the newly created user is returned", function (this: DemoWorld) {
@@ -81,4 +105,25 @@ Then("no user is created in the database", async function (this: DemoWorld) {
   const userCollection = MongoTestHelper.getCollectionByName("users");
   const users = await userCollection.find<User>({}).toArray();
   expect(users.length).toBe(0);
+});
+
+Then("all users should be returned", function (this: DemoWorld) {
+  const users = this.response.data as User[];
+
+  expect(
+    userCollectionWithoutGalleries.every((mockUser) =>
+      users.find(
+        (databaseUser) =>
+          databaseUser.email === mockUser.email &&
+          databaseUser.profile?.firstName === mockUser.profile?.firstName &&
+          databaseUser.profile?.lastName === mockUser.profile?.lastName &&
+          databaseUser.role === mockUser.role,
+      ),
+    ),
+  ).toBe(true);
+});
+
+Then("the specific user should be returned", function (this: DemoWorld) {
+  const user = this.response.data;
+  expect(user).toEqual({ ...this.user, galleries: [] });
 });

@@ -15,3 +15,13 @@ Feature: User endpoint operations
     When the request is sent to the user creation endpoint
     Then the response contains an email address validation error
     And no user is created in the database
+
+  Scenario: Retrieve all users from the database
+    Given the database contains multiple users
+    When the get all user endpoint is called
+    Then all users should be returned
+
+  Scenario: Retrieve specific user from the database
+    Given the database contains multiple users
+    When the get user endpoint is called
+    Then the specific user should be returned

@@ -36,6 +36,11 @@ export class UserBuilder {
     return this;
   }
 
+  public withRole(role: User["role"]): UserBuilder {
+    this.user.role = role;
+    return this;
+  }
+
   public build(): Partial<User> {
     return this.user;
   }
