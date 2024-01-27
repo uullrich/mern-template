@@ -1,3 +1,4 @@
+import Logger from "../util/Logger";
 import { ErrorCode } from "../error/ErrorCode";
 import { ServiceError } from "../error/ServiceError";
 import { Gallery } from "../model/Gallery";
@@ -8,6 +9,7 @@ class GalleryService {
 
   public async getGalleries(userId: string): Promise<Gallery[] | undefined> {
     try {
+      Logger.info({ message: "Fetch all galleries for user in MongoDB", userId });
       const user = await this.user.findById(userId);
       return user?.galleries || undefined;
     } catch (error) {
@@ -17,6 +19,7 @@ class GalleryService {
 
   public async getGalleryById(userId: string, galleryId: string): Promise<Gallery | undefined> {
     try {
+      Logger.info({ message: "Fetch specific gallery from user in MongoDB", userId, galleryId });
       const user = await this.user.findById(userId);
       const gallery = user?.galleries?.id(galleryId);
       if (!gallery) {
@@ -36,6 +39,7 @@ class GalleryService {
 
   public async createGallery(userId: string, gallery: Gallery): Promise<string | undefined> {
     try {
+      Logger.info({ message: "Create gallery for user in MongoDB", userId, gallery });
       const user = await this.user.findById(userId);
       if (!user?.galleries) {
         return;
@@ -55,6 +59,7 @@ class GalleryService {
 
   public async deleteGallery(userId: string, galleryId: string): Promise<void> {
     try {
+      Logger.info({ message: "Delete gallery for user in MongoDB", userId, galleryId });
       const user = await this.user.findById(userId);
       if (!user?.galleries) {
         return;
