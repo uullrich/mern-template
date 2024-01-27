@@ -56,6 +56,14 @@ When("the get user endpoint is called", async function (this: DemoWorld) {
   this.response = await UserRequester.getUser(this.user._id);
 });
 
+When("the delete user endpoint is called", async function (this: DemoWorld) {
+  if (!this.user._id) {
+    fail("Missing user id");
+  }
+
+  this.response = await UserRequester.deleteUser(this.user._id);
+});
+
 Then("the userId of the newly created user is returned", function (this: DemoWorld) {
   expect(this.response.status).toBe(201);
 
@@ -126,4 +134,11 @@ Then("all users should be returned", function (this: DemoWorld) {
 Then("the specific user should be returned", function (this: DemoWorld) {
   const user = this.response.data;
   expect(user).toEqual({ ...this.user, galleries: [] });
+});
+
+Then("the specific user should be deleted in the database", async function (this: DemoWorld) {
+  const userCollection = MongoTestHelper.getCollectionByName("users");
+  const user = await userCollection.findOne<User>({ _id: new ObjectId(this.user._id) });
+
+  expect(user).toBeNull();
 });

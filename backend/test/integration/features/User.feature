@@ -25,3 +25,8 @@ Feature: User endpoint operations
     Given the database contains multiple users
     When the get user endpoint is called
     Then the specific user should be returned
+
+  Scenario: Delete specific user from the database
+    Given the database contains multiple users
+    When the delete user endpoint is called
+    Then the specific user should be deleted in the database

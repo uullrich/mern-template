@@ -20,6 +20,11 @@ export class UserRequester {
     const request = new RequestConfigBuilder().withMethod("GET").withUrl(`/api/user/${id}`).build();
     return this.httpRequester.sendRequest<User>(request);
   }
+
+  public deleteUser(id: string): Promise<Response> {
+    const request = new RequestConfigBuilder().withMethod("DELETE").withUrl(`/api/user/${id}`).build();
+    return this.httpRequester.sendRequest(request);
+  }
 }
 
 export default new UserRequester(AxiosRequester);
