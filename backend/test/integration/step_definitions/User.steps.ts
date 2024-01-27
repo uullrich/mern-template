@@ -113,11 +113,11 @@ Then("all users should be returned", function (this: DemoWorld) {
   expect(
     userCollectionWithoutGalleries.every((mockUser) =>
       users.find(
-        (databaseUser) =>
-          databaseUser.email === mockUser.email &&
-          databaseUser.profile?.firstName === mockUser.profile?.firstName &&
-          databaseUser.profile?.lastName === mockUser.profile?.lastName &&
-          databaseUser.role === mockUser.role,
+        (user) =>
+          user.email === mockUser.email &&
+          user.profile?.firstName === mockUser.profile?.firstName &&
+          user.profile?.lastName === mockUser.profile?.lastName &&
+          user.role === mockUser.role,
       ),
     ),
   ).toBe(true);
