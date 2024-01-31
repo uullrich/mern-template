@@ -44,8 +44,7 @@ class GalleryService {
       user.galleries.push(gallery);
       const saveResult = await user.save();
 
-      const newlyCreatedGalleryId = saveResult.galleries?.[user.galleries.length - 1].id as string;
-      return newlyCreatedGalleryId;
+      return saveResult.galleries?.[user.galleries.length - 1].id as string;
     } catch (error) {
       throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not create gallery in database", { ...gallery }, [
         error,
