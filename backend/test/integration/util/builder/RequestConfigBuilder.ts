@@ -1,8 +1,8 @@
-import { AxiosRequestConfig, Method } from "axios";
 import { v4 as uuid } from "uuid";
+import { RequestConfig, Method } from "../requester/RequestConfig";
 
 export class RequestConfigBuilder {
-  private requestConfig: AxiosRequestConfig;
+  private requestConfig: Partial<RequestConfig>;
 
   constructor() {
     this.requestConfig = {};
@@ -37,7 +37,7 @@ export class RequestConfigBuilder {
     return this;
   }
 
-  public build(): AxiosRequestConfig {
+  public build(): RequestConfig {
     if (!this.requestConfig?.headers?.["x-request-id"]) {
       if (!this.requestConfig.headers) {
         this.requestConfig.headers = {};
@@ -53,6 +53,6 @@ export class RequestConfigBuilder {
       throw new Error("Missing url");
     }
 
-    return this.requestConfig;
+    return this.requestConfig as RequestConfig;
   }
 }
