@@ -1,5 +1,5 @@
-db-data/*
-!db-data/**/.gitkeep
+mongoDB/data/**/*
+!mongoDB/data/**/.gitkeep
 node_modules
 .env
 dist/
