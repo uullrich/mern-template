@@ -25,5 +25,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/db-data/dev
+      device: $PWD/mongoDB/data/dev
       o: bind
