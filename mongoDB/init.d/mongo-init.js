@@ -1,14 +1,22 @@
+const fs = require('fs');
+
 function getEnv(envName) {
   return process.env[envName];
 }
 
-db.auth(getEnv("MONGO_INITDB_ROOT_USERNAME"), getEnv("MONGO_INITDB_ROOT_PASSWORD"))
+db.auth(getEnv("MONGO_INITDB_ROOT_USERNAME"), getEnv("MONGO_INITDB_ROOT_PASSWORD"));
 
-db.getSiblingDB(getEnv("MONGO_DB"))
+db.getSiblingDB(getEnv("MONGO_DB"));
+
+const mongoPassword = fs.readFileSync(getEnv("MONGO_PASSWORD_FILE"), { encoding: 'utf8', flag: 'r' });
+if (!mongoPassword) {
+  print("Missing mongo password");
+  process.exit(1);
+}
 
 const user = {
   user: getEnv("MONGO_USER"),
-  pwd: getEnv("MONGO_PASSWORD"),
+  pwd: mongoPassword,
   roles: [
     {
       role: 'readWrite',
