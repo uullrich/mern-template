@@ -20,6 +20,15 @@ services:
     environment:
       - MONGODB_DATABASE="demo-dev"
 
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/usr/src/app
+
 volumes:
   db_data_dev:
     driver: local

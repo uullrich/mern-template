@@ -12,6 +12,12 @@ services:
     networks:
       - back-tier
 
+  frontend:
+    networks:
+      - front-tier
+    depends_on:
+      - backend
+
 networks:
   back-tier:
     driver: bridge

@@ -12,5 +12,17 @@
             "localRoot": "${workspaceFolder}/backend",
             "remoteRoot": "/usr/src/app",
         }
+        ,
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug frontend in container",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}/frontend/src",
+            "runtimeArgs": [
+                "--remote-debugging-port=9222"
+            ],
+            "sourceMaps": true
+          }
     ]
 }
