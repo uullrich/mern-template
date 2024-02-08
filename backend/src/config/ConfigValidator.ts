@@ -13,7 +13,7 @@ export class ConfigValidator {
       .validate(config, { abortEarly: false, stripUnknown: true });
 
     return {
-      validatedConfig: validationResult.value as T,
+      validatedConfig: validationResult.error ? undefined : (validationResult.value as T),
       error: validationResult.error,
     };
   }
