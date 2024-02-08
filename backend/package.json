@@ -4,7 +4,7 @@
   "description": "Demo backend",
   "main": "index.js",
   "scripts": {
-    "test:unit": "echo \"Error: no unit tests specified\"",
+    "test:unit": "jest --passWithNoTests",
     "test:integration": "cucumber-js",
     "test": "npm run test:integration && npm run test:unit",
     "run:onchange": "node --require ts-node/register --inspect=0.0.0.0:9999 src/index.ts",
