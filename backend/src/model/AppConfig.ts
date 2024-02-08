@@ -10,7 +10,7 @@ export enum LogLevel {
 
 export interface AppConfig {
   env: string;
-  port: string;
+  port: number;
   mongoDbConnection: string;
   logLevel: LogLevel;
 }

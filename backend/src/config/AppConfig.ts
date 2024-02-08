@@ -18,7 +18,7 @@ function getMongoDatabaseConnection(): string {
 
 const appConfig: AppConfig = {
   env: process.env.NODE_ENV || "development",
-  port: process.env.PORT || "3000",
+  port: Number.parseInt(process.env.PORT || "3000"),
   mongoDbConnection: getMongoDatabaseConnection(),
   logLevel: (process.env.LOG_LEVEL as LogLevel) || "debug",
 };
