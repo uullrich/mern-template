@@ -7,7 +7,9 @@ services:
       PORT: 3000
       LOG_LEVEL: info
       NODE_ENV: production
-      MONGO_DB_CONNECTION: mongodb://mongodb:27017/demo-prod
+      MONGO_DB_CONNECTION_FILE: /run/secrets/mongo_connection_string
+    secrets:
+      - mongo_connection_string
     ports:
       - 3000:3000
       - 9999:9999
@@ -15,13 +17,36 @@ services:
   mongodb:
     volumes:
       - db_data_prod:/data/db
+      - db_init:/docker-entrypoint-initdb.d
     environment:
-      - MONGODB_DATABASE="demo-prod"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongo_root_password
+      MONGO_INITDB_DATABASE: admin
+      MONGO_DB: demo-prod
+      MONGO_USER: produser
+      MONGO_PASSWORD_FILE: /run/secrets/mongo_produser_password
+    secrets:
+      - mongo_root_password
+      - mongo_produser_password
 
 volumes:
   db_data_prod:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/db-data/prod
+      device: $PWD/mongoDB/data/prod
       o: bind
+  db_init:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/mongoDB/init.d
+      o: bind
+
+secrets:
+  mongo_root_password:
+    file: $PWD/mongoDB/secrets/mongo_root_password.txt
+  mongo_produser_password:
+    file: $PWD/mongoDB/secrets/mongo_produser_password.txt
+  mongo_connection_string:
+    file: $PWD/mongoDB/secrets/mongo_connection_string.txt

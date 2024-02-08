@@ -21,12 +21,7 @@ class GalleryService {
     try {
       Logger.info({ message: "Fetch specific gallery from user in MongoDB", userId, galleryId });
       const user = await this.user.findById(userId);
-      const gallery = user?.galleries?.id(galleryId);
-      if (!gallery) {
-        return;
-      }
-
-      return gallery;
+      return user?.galleries?.id(galleryId) || undefined;
     } catch (error) {
       throw ServiceError.build(
         ErrorCode.DATABASE_ERROR,

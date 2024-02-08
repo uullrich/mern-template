@@ -18,13 +18,7 @@ class UserService {
   public async getUserById(id: string): Promise<User | undefined> {
     try {
       Logger.info({ message: "Fetch user by id from MongoDB", id });
-
-      const user = await this.user.findById(id);
-      if (!user) {
-        return;
-      }
-
-      return user;
+      return (await this.user.findById(id)) || undefined;
     } catch (error) {
       throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not read single user from database", { id }, [error]);
     }

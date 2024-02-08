@@ -26,12 +26,12 @@ CMD npm run test
 
 FROM base as build
 ENV NODE_ENV production
-COPY . .
 RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
-    npm ci --omit=dev \
-    npm run build
+    npm ci --omit=dev
+COPY . .
+RUN npm run build
 
 FROM base as prod
 ENV NODE_ENV production
