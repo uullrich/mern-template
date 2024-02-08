@@ -21,12 +21,7 @@ class GalleryService {
     try {
       Logger.info({ message: "Fetch specific gallery from user in MongoDB", userId, galleryId });
       const user = await this.user.findById(userId);
-      const gallery = user?.galleries?.id(galleryId);
-      if (!gallery) {
-        return;
-      }
-
-      return gallery;
+      return user?.galleries?.id(galleryId) || undefined;
     } catch (error) {
       throw ServiceError.build(
         ErrorCode.DATABASE_ERROR,
@@ -48,8 +43,7 @@ class GalleryService {
       user.galleries.push(gallery);
       const saveResult = await user.save();
 
-      const newlyCreatedGalleryId = saveResult.galleries?.[user.galleries.length - 1].id as string;
-      return newlyCreatedGalleryId;
+      return saveResult.galleries?.[user.galleries.length - 1].id as string;
     } catch (error) {
       throw ServiceError.build(ErrorCode.DATABASE_ERROR, "Could not create gallery in database", { ...gallery }, [
         error,
