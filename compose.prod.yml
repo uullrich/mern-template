@@ -29,6 +29,13 @@ services:
       - mongo_root_password
       - mongo_produser_password
 
+  frontend:
+    build:
+      context: ./frontend
+      target: prod
+    ports:
+      - 8080:8080
+
 volumes:
   db_data_prod:
     driver: local

@@ -15,6 +15,7 @@ services:
   frontend:
     networks:
       - front-tier
+      - back-tier
     depends_on:
       - backend
 
