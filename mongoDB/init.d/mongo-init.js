@@ -8,7 +8,14 @@ db.auth(getEnv("MONGO_INITDB_ROOT_USERNAME"), getEnv("MONGO_INITDB_ROOT_PASSWORD
 
 db.getSiblingDB(getEnv("MONGO_DB"));
 
-const mongoPassword = fs.readFileSync(getEnv("MONGO_PASSWORD_FILE"), { encoding: 'utf8', flag: 'r' });
+let mongoPassword;
+try {
+  mongoPassword = fs.readFileSync(getEnv("MONGO_PASSWORD_FILE"), { encoding: 'utf8', flag: 'r' });
+} catch(error) {
+  printjson(error);
+  process.exit(1);
+}
+
 if (!mongoPassword) {
   print("Missing mongo password");
   process.exit(1);
