@@ -27,6 +27,14 @@ COPY --chown=node:node --from=all_dependencies /usr/src/app/node_modules ./node_
 USER node
 CMD npm run dev
 
+FROM base as test
+ENV NODE_ENV production
+RUN chown node:node .
+COPY --chown=node:node . .
+COPY --chown=node:node --from=all_dependencies /usr/src/app/node_modules ./node_modules
+USER node
+CMD npm run test
+
 FROM nginxinc/nginx-unprivileged as prod
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
