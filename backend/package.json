@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "Demo backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test:unit": "jest --passWithNoTests",
-    "test:integration": "cucumber-js",
+    "test:integration": "NODE_OPTIONS=\"--loader ts-node/esm\" npx cucumber-js",
     "test": "npm run test:integration && npm run test:unit",
-    "run:onchange": "node --require ts-node/register --inspect=0.0.0.0:9999 src/index.ts",
+    "run:onchange": "node --loader ts-node/esm --inspect=0.0.0.0:9999 src/index.ts",
     "watch:ts": "nodemon --watch 'src/**/*' -e ts --exec 'npm run run:onchange'",
     "dev": "dotenv npm run watch:ts",
     "build:typescript": "tsc",
@@ -20,15 +21,15 @@
     "express": "^4.18.2",
     "joi": "^17.11.1",
     "mongoose": "^8.1.0",
-    "winston": "^3.11.0",
     "utility-types": "^3.11.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.3.1",
-    "@types/node": "^20.11.0",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.19",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "axios": "^1.6.5",
@@ -37,13 +38,13 @@
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-unicorn": "^50.0.1",
     "expect": "^29.7.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3",
+    "jest": "^29.5.11",
+    "mongodb": "^6.3.0",
+    "nodemon": "^3.0.2",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.1",
-    "nodemon": "^3.0.2",
-    "jest": "^29.5.11",
     "ts-jest": "^29.1.2",
-    "mongodb": "^6.3.0"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

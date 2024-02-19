@@ -1,4 +1,4 @@
-import { User } from "../../../src/model/User";
+import { User } from "../../../src/model/User.js";
 
 export const userCollectionWithoutGalleries: User[] = [
   {

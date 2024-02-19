@@ -1,0 +1,7 @@
+{
+  "default": {
+    "paths": ["test/integration/features/**/*.feature"],
+    "import": ["test/integration/step_definitions/**/*.steps.ts"],
+    "parallel": 1
+  }
+}

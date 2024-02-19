@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { User } from "../model/User";
+import { User } from "../model/User.js";
 
 export const createUserBodySchema = {
   body: Joi.object<User>().keys({

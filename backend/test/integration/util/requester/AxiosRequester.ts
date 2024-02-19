@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { HttpRequester, Response } from "./HttpRequester";
-import { RequestConfig } from "./RequestConfig";
+import { HttpRequester, Response } from "./HttpRequester.js";
+import { RequestConfig } from "./RequestConfig.js";
 
 export class AxiosRequester implements HttpRequester {
   constructor(private axios: AxiosInstance) {}

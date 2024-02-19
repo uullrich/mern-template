@@ -1,16 +1,16 @@
 import express, { type Express } from "express";
 import { Server } from "node:http";
-import { galleryRouter, notFoundRouter, userRouter } from "./routes/Routes";
-import { ConfigValidator } from "./config/ConfigValidator";
-import { AppConfig } from "./model/AppConfig";
-import appConfig from "./config/AppConfig";
-import { appConfigSchema } from "./validation/AppConfig.validation";
-import DatabaseConnector from "./connector/DatabaseConnector";
-import errorHandler from "./middleware/errorHandler";
-import Logger from "./util/Logger";
-import { ConnectionError } from "./error/ConnectionError";
-import requestLoggingMiddleware from "./middleware/requestLogging";
-import asyncLocalStorageMiddleware from "./middleware/asyncLocalStorage";
+import { galleryRouter, notFoundRouter, userRouter } from "./routes/Routes.js";
+import { ConfigValidator } from "./config/ConfigValidator.js";
+import { AppConfig } from "./model/AppConfig.js";
+import appConfig from "./config/AppConfig.js";
+import { appConfigSchema } from "./validation/AppConfig.validation.js";
+import DatabaseConnector from "./connector/DatabaseConnector.js";
+import errorHandler from "./middleware/errorHandler.js";
+import Logger from "./util/Logger.js";
+import { ConnectionError } from "./error/ConnectionError.js";
+import requestLoggingMiddleware from "./middleware/requestLogging.js";
+import asyncLocalStorageMiddleware from "./middleware/asyncLocalStorage.js";
 
 export class App {
   private express: Express;

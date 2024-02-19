@@ -1,4 +1,4 @@
-import { AppConfig, LogLevel } from "../../../src/model/AppConfig";
+import { AppConfig, LogLevel } from "../../../src/model/AppConfig.js";
 
 export const validAppConfigs: Partial<AppConfig>[] = [
   {

@@ -5,12 +5,13 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "target": "es2021",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "module": "commonjs",
+    "module": "NodeNext",
     "outDir": "dist",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "*": ["node_modules/*"]
     }

@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { ServiceError } from "../error/ServiceError";
-import { HttpStatus } from "../util/HttpStatus";
-import { ApiError } from "../error/ApiError";
-import { ValidationError } from "../error/ValidationError";
+import { ServiceError } from "../error/ServiceError.js";
+import { HttpStatus } from "../util/HttpStatus.js";
+import { ApiError } from "../error/ApiError.js";
+import { ValidationError } from "../error/ValidationError.js";
 
 /**
  * Handles service errors and sends response with proper http status.

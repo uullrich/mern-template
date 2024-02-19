@@ -1,4 +1,4 @@
-import { AppConfig, LogLevel } from "../model/AppConfig";
+import { AppConfig, LogLevel } from "../model/AppConfig.js";
 import { readFileSync } from "node:fs";
 
 function getMongoDatabaseConnection(): string {

@@ -1,7 +1,7 @@
 import { World, IWorldOptions } from "@cucumber/cucumber";
-import { Response } from "./util/requester/HttpRequester";
-import { UserBuilder } from "./util/builder/UserBuilder";
-import { User } from "../../src/model/User";
+import { Response } from "./util/requester/HttpRequester.js";
+import { UserBuilder } from "./util/builder/UserBuilder.js";
+import { User } from "../../src/model/User.js";
 
 export default class DemoWorld extends World {
   public userBuilder: UserBuilder;

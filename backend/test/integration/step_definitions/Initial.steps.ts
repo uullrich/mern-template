@@ -1,9 +1,9 @@
 import { AfterAll, Before, BeforeAll, setDefaultTimeout, setWorldConstructor } from "@cucumber/cucumber";
-import DemoWorld from "../DemoWorld";
-import { App } from "../../../src/app";
+import DemoWorld from "../DemoWorld.js";
+import { App } from "../../../src/app.js";
 import { fail } from "node:assert";
-import { UserBuilder } from "../util/builder/UserBuilder";
-import MongoTestHelper from "../util/database/MongoTestHelper";
+import { UserBuilder } from "../util/builder/UserBuilder.js";
+import MongoTestHelper from "../util/database/MongoTestHelper.js";
 
 setDefaultTimeout(10_000);
 setWorldConstructor(DemoWorld);

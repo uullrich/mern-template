@@ -1,7 +1,7 @@
-import { ConfigValidator } from "../../src/config/ConfigValidator";
-import { AppConfig } from "../../src/model/AppConfig";
-import { appConfigSchema } from "../../src/validation/AppConfig.validation";
-import { invalidAppConfigs, validAppConfigs } from "./fixtures/AppConfigs";
+import { ConfigValidator } from "../../src/config/ConfigValidator.js";
+import { AppConfig } from "../../src/model/AppConfig.js";
+import { appConfigSchema } from "../../src/validation/AppConfig.validation.js";
+import { invalidAppConfigs, validAppConfigs } from "./fixtures/AppConfigs.js";
 
 describe("App config...", () => {
   it.each(validAppConfigs)("should be validated as valid: %j", (config) => {

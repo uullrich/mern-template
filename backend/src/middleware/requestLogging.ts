@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { AppConfig, LogLevel } from "../model/AppConfig";
-import Logger from "../util/Logger";
+import { AppConfig, LogLevel } from "../model/AppConfig.js";
+import Logger from "../util/Logger.js";
 
 /**
  * Logs a start entry with details based on the log level.

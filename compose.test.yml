@@ -11,7 +11,7 @@ services:
     volumes:
       - ./backend/src:/usr/src/app/src
       - ./backend/test:/usr/src/app/test
-      - ./backend/cucumber.js:/usr/src/app/cucumber.js
+      - ./backend/cucumber.json:/usr/src/app/cucumber.json
 
   mongodb:
     volumes:

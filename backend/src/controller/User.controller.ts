@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { HttpStatus } from "../util/HttpStatus";
-import { TypedRequest } from "../types/TypedRequest";
-import { User } from "../model/User";
-import UserService from "../service/User.service";
+import { HttpStatus } from "../util/HttpStatus.js";
+import { TypedRequest } from "../types/TypedRequest.js";
+import { User } from "../model/User.js";
+import UserService from "../service/User.service.js";
 
 export const getUsers = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {

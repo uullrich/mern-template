@@ -1,7 +1,7 @@
 import { Router } from "express";
-import * as GalleryController from "../controller/Gallery.controller";
-import validate from "../middleware/validate";
-import { createGalleryBodySchema, galleryIdParameterSchema } from "../validation/Gallery.validation";
+import * as GalleryController from "../controller/Gallery.controller.js";
+import validate from "../middleware/validate.js";
+import { createGalleryBodySchema, galleryIdParameterSchema } from "../validation/Gallery.validation.js";
 
 const galleryRouter = Router();
 

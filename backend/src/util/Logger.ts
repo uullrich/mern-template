@@ -1,6 +1,6 @@
-import appConfig from "../config/AppConfig";
+import appConfig from "../config/AppConfig.js";
 import { createLogger, format, transports } from "winston";
-import asyncLocalStorage from "../util/AsyncLocalStorage";
+import asyncLocalStorage from "../util/AsyncLocalStorage.js";
 
 const logger = createLogger({
   level: appConfig.logLevel,

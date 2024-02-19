@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { Gallery } from "../model/Gallery";
+import { Gallery } from "../model/Gallery.js";
 
 export const createGalleryBodySchema = {
   body: Joi.object<Gallery>().keys({

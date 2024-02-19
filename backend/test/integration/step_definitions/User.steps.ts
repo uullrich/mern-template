@@ -2,13 +2,13 @@ import { Given, Then, When } from "@cucumber/cucumber";
 import { expect } from "expect";
 import { ObjectId } from "mongodb";
 import { AxiosError } from "axios";
-import DemoWorld from "../DemoWorld";
-import UserRequester from "../util/requester/UserRequester";
-import MongoTestHelper from "../util/database/MongoTestHelper";
-import { User } from "../../../src/model/User";
-import { Response } from "../util/requester/HttpRequester";
-import { ErrorCode } from "../../../src/error/ErrorCode";
-import { userCollectionWithoutGalleries } from "../fixtures/UserCollection";
+import DemoWorld from "../DemoWorld.js";
+import UserRequester from "../util/requester/UserRequester.js";
+import MongoTestHelper from "../util/database/MongoTestHelper.js";
+import { User } from "../../../src/model/User.js";
+import { Response } from "../util/requester/HttpRequester.js";
+import { ErrorCode } from "../../../src/error/ErrorCode.js";
+import { userCollectionWithoutGalleries } from "../fixtures/UserCollection.js";
 
 Given("the request body contains a(n) valid/invalid email address: {word}", function (this: DemoWorld, email: string) {
   this.userBuilder.withEmail(email);

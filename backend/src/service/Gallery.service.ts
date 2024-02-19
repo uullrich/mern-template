@@ -1,8 +1,8 @@
-import Logger from "../util/Logger";
-import { ErrorCode } from "../error/ErrorCode";
-import { ServiceError } from "../error/ServiceError";
-import { Gallery } from "../model/Gallery";
-import { UserModel, userModel } from "../model/User";
+import Logger from "../util/Logger.js";
+import { ErrorCode } from "../error/ErrorCode.js";
+import { ServiceError } from "../error/ServiceError.js";
+import { Gallery } from "../model/Gallery.js";
+import { UserModel, userModel } from "../model/User.js";
 
 class GalleryService {
   constructor(private user: UserModel) {}

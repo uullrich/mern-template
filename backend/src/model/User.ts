@@ -1,5 +1,5 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
-import { gallerySchema } from "./Gallery";
+import { gallerySchema } from "./Gallery.js";
 
 export const userSchema = new Schema({
   profile: {

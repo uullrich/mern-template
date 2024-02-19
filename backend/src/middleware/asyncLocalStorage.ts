@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { v4 } from "uuid";
-import asyncLocalStorage, { RequestStore } from "../util/AsyncLocalStorage";
+import asyncLocalStorage, { RequestStore } from "../util/AsyncLocalStorage.js";
 
 /**
  * Load the request store with data.
@@ -12,7 +12,7 @@ import asyncLocalStorage, { RequestStore } from "../util/AsyncLocalStorage";
 const asyncLocalStorageMiddleware = (request: Request, response: Response, next: NextFunction): void => {
   const requestStore: RequestStore = {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    requestId: (request.headers["x-request-id"] as string) || (v4() as string),
+    requestId: (request.headers["x-request-id"] as string) || v4(),
   };
 
   asyncLocalStorage.run(requestStore, () => {

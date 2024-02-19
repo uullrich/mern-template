@@ -26,8 +26,8 @@ For the backend the project contains my prefered express app structure with demo
 - :floppy_disk: Utilize MongoDB to efficiently store data
 - :speaking_head: Interacts with the MongoDB using the object modeling tool Mongoose
 - :warning: Validate request payload with the joi library
-- :memo: Detailed logging with requestId for every log entry using winston library and Node.js AsyncLocalStorage feature.
-
+- :memo: Detailed logging with requestId for every log entry using winston library and Node.js AsyncLocalStorage feature
+- :hammer: ESM as module system for maximum compatibility to other packages
 <!-- Project Structure -->
 
 ### Project Structure

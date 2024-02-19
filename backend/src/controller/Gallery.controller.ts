@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { Gallery } from "../model/Gallery";
-import { HttpStatus } from "../util/HttpStatus";
-import GalleryService from "../service/Gallery.service";
-import { TypedRequest } from "../types/TypedRequest";
+import { Gallery } from "../model/Gallery.js";
+import { HttpStatus } from "../util/HttpStatus.js";
+import GalleryService from "../service/Gallery.service.js";
+import { TypedRequest } from "../types/TypedRequest.js";
 
 export const getGalleries = async (request: Request, response: Response, next: NextFunction): Promise<void> => {
   try {

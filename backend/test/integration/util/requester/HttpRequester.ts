@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { RequestConfig } from "./RequestConfig";
+import { RequestConfig } from "./RequestConfig.js";
 
 export type Response<T = unknown> = AxiosResponse<T>;
 

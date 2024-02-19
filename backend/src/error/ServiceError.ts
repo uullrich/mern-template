@@ -1,4 +1,4 @@
-import { ErrorCode } from "./ErrorCode";
+import { ErrorCode } from "./ErrorCode.js";
 
 export class ServiceError extends Error {
   public static build(

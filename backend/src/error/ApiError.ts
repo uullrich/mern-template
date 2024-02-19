@@ -1,5 +1,5 @@
-import { HttpStatus } from "../util/HttpStatus";
-import { ErrorCode } from "./ErrorCode";
+import { HttpStatus } from "../util/HttpStatus.js";
+import { ErrorCode } from "./ErrorCode.js";
 
 export class ApiError extends Error {
   public static build(

@@ -1,7 +1,7 @@
-import { User } from "../../../../src/model/User";
-import { RequestConfigBuilder } from "../builder/RequestConfigBuilder";
-import AxiosRequester from "./AxiosRequester";
-import { HttpRequester, Response } from "./HttpRequester";
+import { User } from "../../../../src/model/User.js";
+import { RequestConfigBuilder } from "../builder/RequestConfigBuilder.js";
+import AxiosRequester from "./AxiosRequester.js";
+import { HttpRequester, Response } from "./HttpRequester.js";
 
 export class UserRequester {
   constructor(private httpRequester: HttpRequester) {}

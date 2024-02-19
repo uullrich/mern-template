@@ -1,4 +1,4 @@
-import { User } from "../../../../src/model/User";
+import { User } from "../../../../src/model/User.js";
 
 export class UserBuilder {
   private user: Partial<User>;

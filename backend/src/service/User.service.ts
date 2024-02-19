@@ -1,7 +1,7 @@
-import Logger from "../util/Logger";
-import { ErrorCode } from "../error/ErrorCode";
-import { ServiceError } from "../error/ServiceError";
-import { User, UserModel, userModel } from "../model/User";
+import Logger from "../util/Logger.js";
+import { ErrorCode } from "../error/ErrorCode.js";
+import { ServiceError } from "../error/ServiceError.js";
+import { User, UserModel, userModel } from "../model/User.js";
 
 class UserService {
   constructor(private user: UserModel) {}

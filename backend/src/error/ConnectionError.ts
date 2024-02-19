@@ -1,5 +1,5 @@
-import { ConnectionType } from "../connector/ConnectionType";
-import { ErrorCode } from "./ErrorCode";
+import { ConnectionType } from "../connector/ConnectionType.js";
+import { ErrorCode } from "./ErrorCode.js";
 
 export class ConnectionError extends Error {
   public static build(

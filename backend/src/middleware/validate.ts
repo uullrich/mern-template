@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import Joi from "joi";
-import { RequestValidationSchema } from "../validation/RequestValidationSchema";
-import { ErrorCode } from "../error/ErrorCode";
-import { ValidationError } from "../error/ValidationError";
+import { RequestValidationSchema } from "../validation/RequestValidationSchema.js";
+import { ErrorCode } from "../error/ErrorCode.js";
+import { ValidationError } from "../error/ValidationError.js";
 
 /**
  * This functions handles the validation of the given request validation schema.

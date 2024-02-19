@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import appConfig from "../config/AppConfig";
-import Logger from "../util/Logger";
-import { ConnectionError } from "../error/ConnectionError";
-import { ConnectionType } from "./ConnectionType";
-import { ErrorCode } from "../error/ErrorCode";
+import appConfig from "../config/AppConfig.js";
+import Logger from "../util/Logger.js";
+import { ConnectionError } from "../error/ConnectionError.js";
+import { ConnectionType } from "./ConnectionType.js";
+import { ErrorCode } from "../error/ErrorCode.js";
 
 class DatabaseConnector {
   private static NUMBER_OF_CONNECTION_RETRIES = 3;

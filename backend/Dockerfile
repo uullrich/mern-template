@@ -37,5 +37,6 @@ FROM base as prod
 ENV NODE_ENV production
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/package.json ./
 USER node
 CMD node dist/index.js

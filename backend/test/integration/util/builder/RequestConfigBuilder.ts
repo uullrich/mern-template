@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { RequestConfig, Method } from "../requester/RequestConfig";
+import { RequestConfig, Method } from "../requester/RequestConfig.js";
 
 export class RequestConfigBuilder {
   private requestConfig: Partial<RequestConfig>;

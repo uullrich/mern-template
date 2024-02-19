@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { AppConfig, LogLevel } from "../model/AppConfig";
+import { AppConfig, LogLevel } from "../model/AppConfig.js";
 
 export const appConfigSchema = Joi.object<AppConfig>().keys({
   env: Joi.string().valid("production", "development").required(),
